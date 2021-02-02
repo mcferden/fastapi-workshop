@@ -1,6 +1,5 @@
 fastapi
 uvicorn
-aiofiles
 passlib[bcrypt]
 pydantic
 python-dotenv
