@@ -1,13 +1,19 @@
-from typing import List
-from typing import Optional
+from typing import (
+    List,
+    Optional,
+)
 
-from fastapi import Depends
-from fastapi import HTTPException
-from fastapi import status
+from fastapi import (
+    Depends,
+    HTTPException,
+    status,
+)
 from sqlalchemy.orm import Session
 
-from .. import models
-from .. import tables
+from .. import (
+    models,
+    tables,
+)
 from ..database import get_session
 
 

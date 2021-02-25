@@ -1,10 +1,14 @@
 import csv
 from io import StringIO
+from typing import (
+    BinaryIO,
+    TextIO,
+)
 
 from fastapi import Depends
 
-from .. import models
 from .operations import OperationsService
+from .. import models
 
 
 class ReportsService:

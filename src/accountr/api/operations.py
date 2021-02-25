@@ -1,9 +1,11 @@
 from typing import List
 
-from fastapi import APIRouter
-from fastapi import Depends
-from fastapi import Response
-from fastapi import status
+from fastapi import (
+    APIRouter,
+    Depends,
+    Response,
+    status,
+)
 
 from .. import models
 from ..services.auth import get_current_user

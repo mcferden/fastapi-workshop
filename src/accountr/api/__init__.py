@@ -1,8 +1,10 @@
 from fastapi import APIRouter
 
-from . import auth
-from . import operations
-from . import reports
+from . import (
+    auth,
+    operations,
+    reports,
+)
 
 
 router = APIRouter()
