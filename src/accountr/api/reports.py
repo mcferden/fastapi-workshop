@@ -20,11 +20,16 @@ router = APIRouter(
 
 @router.post('/import')
 def import_csv(
+    background_tasks: BackgroundTasks,
     file: UploadFile = File(...),
     user: models.User = Depends(get_current_user),
     reports_service: ReportsService = Depends(),
 ):
-    reports_service.import_csv(user.id, file.file)
+    background_tasks.add_task(
+        reports_service.import_csv,
+        user.id,
+        file.file,
+    )
 
 
 @router.get('/export')
