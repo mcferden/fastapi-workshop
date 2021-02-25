@@ -69,9 +69,12 @@ class AuthService:
     @classmethod
     def create_token(cls, user: tables.User) -> models.Token:
         user_data = models.User.from_orm(user)
+        now = datetime.utcnow()
         payload = {
+            'iat': now,
+            'nbf': now,
+            'exp': now + timedelta(seconds=settings.jwt_expires_s),
             'sub': str(user_data.id),
-            'exp': datetime.utcnow() + timedelta(seconds=settings.jwt_expires_s),
             'user': user_data.dict(),
         }
         token = jwt.encode(
