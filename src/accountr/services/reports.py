@@ -24,9 +24,10 @@ class ReportsService:
 
     def import_csv(self, user_id: int, file: BinaryIO):
         reader = csv.DictReader(
-            (line.decode() for line in file.file),
+            (line.decode() for line in file),
             fieldnames=self.report_fields,
         )
+        next(reader, None)  # Skip the header
         operations_data = []
         for row in reader:
             operation_data = models.OperationCreate.parse_obj(row)
