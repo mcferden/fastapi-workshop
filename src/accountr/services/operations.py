@@ -25,7 +25,7 @@ class OperationsService:
         operations = (
             self.session
             .query(tables.Operation)
-            .filter(tables.Operation.owner_id == user_id)
+            .filter(tables.Operation.user_id == user_id)
             .order_by(
                 tables.Operation.date.desc(),
                 tables.Operation.id.desc(),
@@ -52,7 +52,7 @@ class OperationsService:
         operations = [
             tables.Operation(
                 **operation_data.dict(),
-                owner_id=user_id,
+                user_id=user_id,
             )
             for operation_data in operations_data
         ]
@@ -67,7 +67,7 @@ class OperationsService:
     ) -> tables.Operation:
         operation = tables.Operation(
             **operation_data.dict(),
-            owner_id=user_id,
+            user_id=user_id,
         )
         self.session.add(operation)
         self.session.commit()
@@ -105,7 +105,7 @@ class OperationsService:
             self.session
             .query(tables.Operation)
             .filter(
-                tables.Operation.owner_id == user_id,
+                tables.Operation.user_id == user_id,
                 tables.Operation.id == operation_id,
             )
             .first()

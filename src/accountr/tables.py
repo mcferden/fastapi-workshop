@@ -19,17 +19,17 @@ class User(Base):
     id = Column(Integer, primary_key=True)
     email = Column(String, unique=True)
     username = Column(String, unique=True)
-    password = Column(String)
+    password_hash = Column(String)
 
 
 class Operation(Base):
     __tablename__ = 'operations'
 
     id = Column(Integer, primary_key=True)
-    owner_id = Column(Integer, ForeignKey('users.id'), index=True)
+    user_id = Column(Integer, ForeignKey('users.id'), index=True)
     date = Column(Date)
     kind = Column(String)
     amount = Column(Numeric(10, 2))
     description = Column(String, nullable=True)
 
-    owner = relationship('User', backref='operations')
+    user = relationship('User', backref='operations')

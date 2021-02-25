@@ -91,8 +91,11 @@ class AuthService:
         self,
         user_data: models.UserCreate,
     ) -> models.Token:
-        user_data.password = self.hash_password(user_data.password)
-        user = tables.User(**user_data.dict())
+        user = tables.User(
+            email=user_data.email,
+            username=user_data.username,
+            password_hash=self.hash_password(user_data.password),
+        )
         self.session.add(user)
         self.session.commit()
         return self.create_token(user)
@@ -107,15 +110,18 @@ class AuthService:
             detail='Incorrect username or password',
             headers={'WWW-Authenticate': 'Bearer'},
         )
+
         user = (
             self.session
             .query(tables.User)
             .filter(tables.User.username == username)
             .first()
         )
+
         if not user:
             raise exception
-        if not self.verify_password(password, user.password):
+
+        if not self.verify_password(password, user.password_hash):
             raise exception
 
         return self.create_token(user)
