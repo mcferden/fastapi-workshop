@@ -40,8 +40,6 @@ class OperationsService:
         operation_id: int
     ) -> tables.Operation:
         operation = self._get(user_id, operation_id)
-        if not operation:
-            raise HTTPException(status.HTTP_404_NOT_FOUND)
         return operation
 
     def create_many(
@@ -80,12 +78,8 @@ class OperationsService:
         operation_data: models.OperationUpdate,
     ) -> tables.Operation:
         operation = self._get(user_id, operation_id)
-        if not operation:
-            raise HTTPException(status.HTTP_404_NOT_FOUND)
-
         for field, value in operation_data:
             setattr(operation, field, value)
-
         self.session.commit()
         return operation
 
@@ -95,8 +89,6 @@ class OperationsService:
         operation_id: int,
     ):
         operation = self._get(user_id, operation_id)
-        if not operation:
-            raise HTTPException(status.HTTP_404_NOT_FOUND)
         self.session.delete(operation)
         self.session.commit()
 
@@ -110,4 +102,6 @@ class OperationsService:
             )
             .first()
         )
+        if not operation:
+            raise HTTPException(status.HTTP_404_NOT_FOUND)
         return operation
