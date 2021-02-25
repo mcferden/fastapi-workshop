@@ -79,10 +79,7 @@ class AuthService:
             settings.jwt_secret,
             algorithm=settings.jwt_algorithm,
         )
-        return models.Token(
-            access_token=token,
-            token_type='bearer',
-        )
+        return models.Token(access_token=token)
 
     def __init__(self, session: Session = Depends(get_session)):
         self.session = session
