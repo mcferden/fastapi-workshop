@@ -22,7 +22,7 @@ class ReportsService:
     def __init__(self, operations_service: OperationsService = Depends()):
         self.operations_service = operations_service
 
-    def import_csv(self, user_id: int, file):
+    def import_csv(self, user_id: int, file: BinaryIO):
         reader = csv.DictReader(
             (line.decode() for line in file.file),
             fieldnames=self.report_fields,
@@ -38,7 +38,7 @@ class ReportsService:
             operations_data,
         )
 
-    def export_csv(self, user_id: int):
+    def export_csv(self, user_id: int) -> TextIO:
         output = StringIO()
         writer = csv.DictWriter(
             output,
