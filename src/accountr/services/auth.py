@@ -58,11 +58,9 @@ class AuthService:
             raise exception from None
 
         user_data = payload.get('user')
-        if not isinstance(user_data, dict):
-            raise exception
 
         try:
-            user = models.User(**user_data)
+            user = models.User.parse_obj(user_data)
         except ValidationError:
             raise exception from None
 
